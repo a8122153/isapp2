@@ -11,10 +11,18 @@
     <script>
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
+        var x;
+
         $().ready(function () {
-            doSelect();
+            x = 0;
+            setInterval(doCount, 2000);
         });
 
+        async function doCount() {
+            x++;
+            doSelect();
+        }   
+            
         async function doSelect() {
             var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
