@@ -12,11 +12,12 @@
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
         function button1Pressed() {
-            doSelect();
+            var k = document.getElementById('Search').value;
+            doSelect(k);
         }
 
-        async function doSelect() {
-            var sql = 'select * from Tweets order by time desc limit 20';
+        async function doSelect(k) {
+            var sql = 'select * from Tweets where tweet like "%' + k + '%" order by time desc limit 20';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -34,7 +35,8 @@
 
 <body>
     <h1>Tweets</h1>
-    <button onclick="button1Pressed()">X</button>
+    検索:<input id="Search" value="" type="textfield">
+    <button onclick="button1Pressed()">検索</button>
     <hr>
     <p id="result">xxxx</p>
 </body>
